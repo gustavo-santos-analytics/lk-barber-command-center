@@ -2,8 +2,8 @@
 
 # ✂️ L&K BARBEARIA — SISTEMA DE GESTÃO INTELIGENTE
 
-**De caderninho e planilha bagunçada para um sistema completo de gestão em tempo real.**  
-*Um projeto real, implantado em produção, construído do zero por um Analista de Dados.*
+**De caderninho para um sistema completo de gestão em tempo real.**  
+*Um projeto real, implantado em produção, construído do zero.*
 
 <br>
 
@@ -11,7 +11,9 @@
 ![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)
 ![Apps Script](https://img.shields.io/badge/Apps%20Script-4285F4?style=for-the-badge&logo=google&logoColor=white)
 ![Looker Studio](https://img.shields.io/badge/Looker%20Studio-4285F4?style=for-the-badge&logo=looker&logoColor=white)
-![HTML CSS JS](https://img.shields.io/badge/HTML%20%7C%20CSS%20%7C%20JS-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-663399.svg?style=for-the-badge&logo=CSS&logoColor=white)
+![JS](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-181717?style=for-the-badge&logo=github&logoColor=white)
 
 <br>
@@ -24,7 +26,7 @@
 
 ## 🎯 O Problema Real
 
-Uma barbearia com 3 barbeiros, atendendo dezenas de clientes por dia, controlava tudo no **caderninho** — sem visibilidade de faturamento, sem controle de comissões, sem rastreio de estoque ou custos operacionais.
+Uma barbearia com 3 barbeiros, atendendo dezenas de clientes por dia, controlava tudo no **caderninho**, sem visibilidade de faturamento, sem controle de comissões, sem rastreio de estoque ou custos operacionais.
 
 **O dono não sabia responder:**
 - Quanto faturou essa semana? E esse mês?
@@ -123,7 +125,7 @@ LK_Barbearia (Google Sheets)
 
 Uma das decisões mais importantes do projeto: **os preços são capturados no momento do lançamento** e gravados como valor estático, não como fórmula que referencia a CONFIG.
 
-Se usássemos PROCV, uma atualização de preço em dezembro retroagiria todos os registros históricos de janeiro — **corrompendo completamente o histórico financeiro**. A abordagem escolhida garante integridade dos dados históricos.
+Se usássemos PROCV, uma atualização de preço em dezembro retroagiria todos os registros históricos de janeiro, **corrompendo completamente o histórico financeiro**. A abordagem escolhida garante integridade dos dados históricos.
 
 ### Por que o preço de custo usa QUERY na CONFIG?
 
@@ -226,7 +228,7 @@ assets/
 
 Este projeto foi concebido, arquitetado e desenvolvido por **Gustavo Santos**, Analista de Dados, como solução real para um cliente real.
 
-O objetivo foi ir além de uma planilha comum — entregando um sistema integrado, com automação robusta, controle histórico e inteligência nos dados, usando ferramentas acessíveis e de custo zero para o cliente.
+O objetivo foi ir além de uma planilha comum, entregando um sistema integrado, com automação robusta, controle histórico e inteligência nos dados, usando ferramentas acessíveis e de custo zero para o cliente.
 
 **Habilidades demonstradas neste projeto:**
 - Arquitetura de dados para pequenos negócios
@@ -250,5 +252,5 @@ O objetivo foi ir além de uma planilha comum — entregando um sistema integrad
 ---
 
 <div align="center">
-<sub>Desenvolvido com 💈 para a L&K Barbearia · 2025/2026</sub>
+<sub>Desenvolvido para a L&K Barbearia · 2026</sub>
 </div>
