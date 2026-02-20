@@ -25,10 +25,10 @@
     // DEFINIÇÃO DOS BOTÕES
     // ============================================
     const actions = [
-      { label: "Vendas de Produtos", subtitle: "Registrar vendas",   icon: ICONS.shoppingBag, href: LINKS.vendasProdutos,     delay: 0 },
       { label: "Bancada 1",         subtitle: "Atendimentos",        icon: ICONS.scissors,    href: LINKS.bancada1,            delay: 50 },
       { label: "Bancada 2",         subtitle: "Atendimentos",        icon: ICONS.scissors,    href: LINKS.bancada2,            delay: 100 },
       { label: "Bancada 3",         subtitle: "Atendimentos",        icon: ICONS.scissors,    href: LINKS.bancada3,            delay: 150 },
+      { label: "Vendas de Produtos", subtitle: "Registrar vendas",   icon: ICONS.shoppingBag, href: LINKS.vendasProdutos,     delay: 0 },
       { label: "Custos Operacionais", subtitle: "Controle de custos", icon: ICONS.dollarSign, href: LINKS.custosOperacionais, delay: 200 },
       { label: "Compras de Insumos", subtitle: "Registrar compras",  icon: ICONS.package,     href: LINKS.comprasInsumos,      delay: 250 },
     ];
