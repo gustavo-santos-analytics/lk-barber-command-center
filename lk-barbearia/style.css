@@ -1,0 +1,274 @@
+    /* ==========================================
+       RESET & BASE
+       ========================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: hsl(0, 0%, 7%);
+      --fg: hsl(40, 20%, 92%);
+      --gold: hsl(43, 72%, 55%);
+      --gold-light: hsl(43, 80%, 65%);
+      --gold-dark: hsl(43, 65%, 40%);
+      --muted: hsl(0, 0%, 55%);
+      --border: hsl(0, 0%, 18%);
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-hover: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ==========================================
+       BACKGROUND PATTERN
+       ========================================== */
+    .bg-pattern {
+      position: fixed;
+      inset: 0;
+      opacity: 0.02;
+      background-image: radial-gradient(circle at 1px 1px, var(--fg) 1px, transparent 0);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ==========================================
+       MAIN LAYOUT
+       ========================================== */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      padding: 3rem 1rem;
+    }
+
+    /* ==========================================
+       HERO SECTION
+       ========================================== */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeIn 0.8s ease-out both;
+    }
+
+    .hero-logo {
+      width: 7rem;
+      height: 7rem;
+      object-fit: contain;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================
+       GLASS CARD
+       ========================================== */
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.5s ease;
+    }
+
+    .glass-card:hover {
+      background: var(--glass-hover);
+      border-color: hsla(43, 72%, 55%, 0.3);
+      box-shadow: 0 0 30px hsla(43, 72%, 55%, 0.08), inset 0 1px 0 hsla(43, 72%, 55%, 0.1);
+    }
+
+    /* ==========================================
+       ACTION GRID
+       ========================================== */
+    .actions-grid {
+      width: 100%;
+      max-width: 42rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .action-card {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .action-icon-wrap {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.5rem;
+      background: hsla(43, 72%, 55%, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+    .glass-card:hover .action-icon-wrap {
+      background: hsla(43, 72%, 55%, 0.2);
+    }
+
+    .action-icon-wrap svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: var(--gold);
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover .action-icon-wrap svg {
+      transform: scale(1.1);
+    }
+
+    .action-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--fg);
+    }
+
+    .action-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.125rem;
+    }
+
+    /* ==========================================
+       DASHBOARD BUTTON
+       ========================================== */
+    .dashboard-wrap {
+      width: 100%;
+      max-width: 42rem;
+    }
+
+    .dashboard-btn {
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 40px hsla(43, 72%, 55%, 0.15);
+      border-color: hsla(43, 72%, 55%, 0.2);
+    }
+
+    .dashboard-btn .dash-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .dashboard-btn .dash-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .dash-text {
+      text-align: left;
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 1.5rem;
+      text-align: center;
+      border-top: 1px solid hsla(0, 0%, 18%, 0.5);
+    }
+
+    footer p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ==========================================
+       ANIMATIONS
+       ========================================== */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.6s ease-out both;
+    }
+
+    /* ==========================================
+       RESPONSIVE
+       ========================================== */
+    @media (min-width: 640px) {
+      main { padding: 4rem 1rem; }
+      .hero { margin-bottom: 4rem; }
+      .hero-logo { width: 9rem; height: 9rem; }
+      .hero h1 { font-size: 1.875rem; }
+      .hero p { font-size: 1rem; }
+      .actions-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .dashboard-btn .dash-title { font-size: 1.125rem; }
+    }
+
+    @media (min-width: 768px) {
+      .hero h1 { font-size: 2.25rem; }
+    }
