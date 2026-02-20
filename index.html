@@ -4,11 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L&K Barbearia — Gestão Inteligente</title>
+  <title>L&K Barbearia — Gestão Inteligente (Demo)</title>
   <link rel="icon" href="./assets/Logo_LK.png" type="image/png">
-  <!-- opcional: ícone para iOS -->
   <link rel="apple-touch-icon" href="./assets/Logo_LK.png">
-  <meta name="description" content="Painel de gestão inteligente da L&K Barbearia.">
+  <meta name="description" content="Painel de gestão inteligente da L&K Barbearia — versão demonstrativa.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +36,6 @@
     <section class="dashboard-wrap animate-fade-up" style="animation-delay: 350ms;">
       <a id="dashboardBtn" class="glass-card dashboard-btn" target="_blank" rel="noopener noreferrer">
         <div class="action-icon-wrap" style="background: hsla(43,72%,55%,0.15);">
-          <!-- BarChart3 icon -->
           <svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
         </div>
         <div class="dash-text">
@@ -50,23 +48,47 @@
 
   <!-- Footer -->
   <footer>
-    <p> L&K Barber Store © <span id="year"></span> | Desenvolvido por 
-    <a href="https://www.linkedin.com/in/santosgustavohenrique" 
-       target="_blank" 
-       rel="noopener noreferrer"
-       class="footer-link"
-       style="
-         color: #d4af37;
-         text-decoration: none;
-         font-weight: 500;
-         transition: 0.3s ease;
-       "
-       onmouseover="this.style.color='#f1c40f'"
-       onmouseout="this.style.color='#d4af37'">
-       Gustavo Santos
-    </a>
+    <p>L&K Barber Store © <span id="year"></span> | Desenvolvido por
+      <a href="https://www.linkedin.com/in/santosgustavohenrique"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="color:#d4af37;text-decoration:none;font-weight:500;transition:0.3s ease;"
+         onmouseover="this.style.color='#f1c40f'"
+         onmouseout="this.style.color='#d4af37'">
+         Gustavo Santos
+      </a>
+    </p>
   </footer>
 
+  <!-- Demo Badge — canto inferior esquerdo -->
+  <div class="demo-badge">
+    <span class="demo-badge-icon">🔒</span>
+    <div class="demo-badge-text">
+      <strong>Versão Demonstrativa</strong>
+      Os formulários exibidos contêm dados fictícios para preservar a confidencialidade do cliente.
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="demoModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-header-text">📋 Prévia do Formulário</span>
+        <button class="modal-close" id="modalClose" aria-label="Fechar">✕</button>
+      </div>
+      <div class="modal-img-wrap">
+        <img id="modalImg" src="" alt="Preview do formulário" />
+      </div>
+      <div class="modal-footer">
+        <span class="modal-footer-icon">🔒</span>
+        <p>
+          <strong>Versão demonstrativa.</strong>
+          Os dados exibidos são fictícios. O sistema em produção opera com dados reais e acesso restrito ao cliente.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>

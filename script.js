@@ -1,14 +1,14 @@
     // ============================================
-    // CONFIGURAÇÃO DE LINKS - Altere os URLs aqui
+    // DEMO VERSION — Links substituídos por imagens
     // ============================================
-    const LINKS = {
-      vendasProdutos:    "https://docs.google.com/forms/d/e/1FAIpQLSfGWQ3RHaYGdWG6F4hlVo-tYIpGRm1BD8QMF3Tvf5Cb1sAZwA/viewform?usp=sharing&ouid=106365429052908774161",
-      bancada1:          "https://docs.google.com/forms/d/e/1FAIpQLSfu5k3arIvADOMy6LnyQTIIo-JR2nP2uJSyCtiiFvDde9LTYg/viewform?usp=pp_url&entry.509369668=Bruno",
-      bancada2:          "https://docs.google.com/forms/d/e/1FAIpQLSfu5k3arIvADOMy6LnyQTIIo-JR2nP2uJSyCtiiFvDde9LTYg/viewform?usp=pp_url&entry.509369668=Nauan",
-      bancada3:          "https://docs.google.com/forms/d/e/1FAIpQLSfu5k3arIvADOMy6LnyQTIIo-JR2nP2uJSyCtiiFvDde9LTYg/viewform?usp=pp_url&entry.509369668=Barbeiro+3",
-      custosOperacionais:"https://docs.google.com/forms/d/e/1FAIpQLSd2JJFipTlGSjOFEzNLx21-HSIQ-bXZo_7h3PMaR38lAnKcjg/viewform?usp=sharing&ouid=106365429052908774161",
-      comprasInsumos:    "https://docs.google.com/forms/d/e/1FAIpQLSeB77CaazsSVRPXArE9juiDXCDQpsW5HOI3mPll3Sv7h7bqVw/viewform?usp=sharing&ouid=106365429052908774161",
-      dashboard:         "",
+    const IMAGENS = {
+      vendasProdutos:     "./assets/demo/form-vendas-produtos.png",
+      bancada1:           "./assets/demo/form-bancada1.png",
+      bancada2:           "./assets/demo/form-bancada1.png",
+      bancada3:           "./assets/demo/form-bancada1.png",
+      custosOperacionais: "./assets/demo/form-custos.png",
+      comprasInsumos:     "./assets/demo/form-compras.png",
+      dashboard:          "https://lookerstudio.google.com", // substituir pelo link real do demo
     };
 
     // ============================================
@@ -25,13 +25,40 @@
     // DEFINIÇÃO DOS BOTÕES
     // ============================================
     const actions = [
-      { label: "Bancada 1",         subtitle: "Atendimentos",        icon: ICONS.scissors,    href: LINKS.bancada1,            delay: 50 },
-      { label: "Bancada 2",         subtitle: "Atendimentos",        icon: ICONS.scissors,    href: LINKS.bancada2,            delay: 100 },
-      { label: "Bancada 3",         subtitle: "Atendimentos",        icon: ICONS.scissors,    href: LINKS.bancada3,            delay: 150 },
-      { label: "Vendas de Produtos", subtitle: "Registrar vendas",   icon: ICONS.shoppingBag, href: LINKS.vendasProdutos,     delay: 0 },
-      { label: "Custos Operacionais", subtitle: "Controle de custos", icon: ICONS.dollarSign, href: LINKS.custosOperacionais, delay: 200 },
-      { label: "Compras de Insumos", subtitle: "Registrar compras",  icon: ICONS.package,     href: LINKS.comprasInsumos,      delay: 250 },
+      { label: "Bancada 1",          subtitle: "Atendimentos",        icon: ICONS.scissors,    img: IMAGENS.bancada1,            delay: 50  },
+      { label: "Bancada 2",          subtitle: "Atendimentos",        icon: ICONS.scissors,    img: IMAGENS.bancada2,            delay: 100 },
+      { label: "Bancada 3",          subtitle: "Atendimentos",        icon: ICONS.scissors,    img: IMAGENS.bancada3,            delay: 150 },
+      { label: "Vendas de Produtos", subtitle: "Registrar vendas",    icon: ICONS.shoppingBag, img: IMAGENS.vendasProdutos,      delay: 0   },
+      { label: "Custos Operacionais",subtitle: "Controle de custos",  icon: ICONS.dollarSign,  img: IMAGENS.custosOperacionais,  delay: 200 },
+      { label: "Compras de Insumos", subtitle: "Registrar compras",   icon: ICONS.package,     img: IMAGENS.comprasInsumos,      delay: 250 },
     ];
+
+    // ============================================
+    // MODAL
+    // ============================================
+    const modal = document.getElementById("demoModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalClose = document.getElementById("modalClose");
+
+    function openModal(imgSrc) {
+      modalImg.src = imgSrc;
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.remove("active");
+      document.body.style.overflow = "";
+      setTimeout(function() { modalImg.src = ""; }, 300);
+    }
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", function(e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeModal();
+    });
 
     // ============================================
     // RENDERIZAÇÃO
@@ -39,23 +66,24 @@
     const grid = document.getElementById("actionsGrid");
 
     actions.forEach(function(action) {
-      const card = document.createElement("a");
-      card.href = action.href;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
+      const card = document.createElement("div");
       card.className = "glass-card action-card animate-fade-up";
       card.style.animationDelay = action.delay + "ms";
+      card.style.cursor = "pointer";
       card.innerHTML =
         '<div class="action-icon-wrap">' + action.icon + '</div>' +
         '<div>' +
           '<p class="action-label">' + action.label + '</p>' +
           '<p class="action-sub">' + action.subtitle + '</p>' +
         '</div>';
+      card.addEventListener("click", function() {
+        openModal(action.img);
+      });
       grid.appendChild(card);
     });
 
-    // Dashboard link
-    document.getElementById("dashboardBtn").href = LINKS.dashboard;
+    // Dashboard link — esse abre normalmente (Looker Studio demo é público)
+    document.getElementById("dashboardBtn").href = IMAGENS.dashboard;
 
     // Ano automático
     document.getElementById("year").textContent = new Date().getFullYear();

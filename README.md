@@ -2,21 +2,16 @@
 
 # ✂️ L&K BARBEARIA — SISTEMA DE GESTÃO INTELIGENTE
 
-**De caderninho para um sistema completo de gestão em tempo real.**  
-*Um projeto real, construído do zero. Focada em **Data Analytics** com um toque de Desenvolvimento Web.*
+**De caderninho e planilha bagunçada para um sistema completo de gestão em tempo real.**  
+*Um projeto real, implantado em produção, construído do zero por um Analista de Dados.*
 
 <br>
 
 ![Status](https://img.shields.io/badge/Status-Em%20Produção-brightgreen?style=for-the-badge)
-
-<br>
-
 ![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)
 ![Apps Script](https://img.shields.io/badge/Apps%20Script-4285F4?style=for-the-badge&logo=google&logoColor=white)
 ![Looker Studio](https://img.shields.io/badge/Looker%20Studio-4285F4?style=for-the-badge&logo=looker&logoColor=white)
-![HTML](https://img.shields.io/badge/HTML5-E34F26.svg?style=for-the-badge&logo=HTML5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-663399.svg?style=for-the-badge&logo=CSS&logoColor=white)
-![JS](https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black)
+![HTML CSS JS](https://img.shields.io/badge/HTML%20%7C%20CSS%20%7C%20JS-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-181717?style=for-the-badge&logo=github&logoColor=white)
 
 <br>
@@ -29,7 +24,7 @@
 
 ## 🎯 O Problema Real
 
-Uma barbearia com 3 barbeiros, atendendo dezenas de clientes por dia, controlava tudo no **caderninho**, sem visibilidade de faturamento, sem controle de comissões, sem rastreio de estoque ou custos operacionais.
+Uma barbearia com 3 barbeiros, atendendo dezenas de clientes por dia, controlava tudo no **caderninho** — sem visibilidade de faturamento, sem controle de comissões, sem rastreio de estoque ou custos operacionais.
 
 **O dono não sabia responder:**
 - Quanto faturou essa semana? E esse mês?
@@ -44,7 +39,7 @@ Uma barbearia com 3 barbeiros, atendendo dezenas de clientes por dia, controlava
 
 ## 🏗️ Arquitetura da Solução
 
-![Arquitetura do Sistema](./assets/architecture.svg)
+![Arquitetura do Sistema](./architecture.svg)
 
 O sistema foi projetado em **4 camadas independentes e integradas**:
 
@@ -155,24 +150,36 @@ if (isNaN(valor)) valor = 0;
 
 ---
 
-## 🖥️ Command Center (Site)
+## 🖥️ Command Center (Site — Versão Demo)
 
 O site foi construído em HTML, CSS e JS puro, hospedado no **GitHub Pages**, e serve como ponto de acesso central para os barbeiros.
 
 🔗 [gustavo-santos-analytics.github.io/lk-barber-command-center](https://gustavo-santos-analytics.github.io/lk-barber-command-center/)
 
 **Funcionalidades:**
-- Botões de acesso direto para cada formulário
+- Botões que abrem uma **prévia visual** de cada formulário em modal
+- Aviso fixo de versão demonstrativa no canto inferior esquerdo
 - Botão para o Dashboard (Looker Studio)
 - Layout responsivo para uso no celular
 
-> 📸 *Fotos dos barbeiros utilizando o sistema em produção serão adicionadas após o go-live oficial.*
+> 📸 *Esta é a versão demonstrativa pública. Os botões exibem prints dos formulários reais com aviso de dados fictícios, preservando a confidencialidade do cliente. O sistema em produção opera com acesso direto aos formulários via link.*
+
+**Estrutura de assets:**
+```
+assets/
+├── Logo_LK.png
+└── demo/
+    ├── form-bancada1.png          ← prévia do formulário de atendimentos
+    ├── form-vendas-produtos.png   ← prévia do formulário de vendas
+    ├── form-custos.png            ← prévia do formulário de custos
+    └── form-compras.png           ← prévia do formulário de compras
+```
 
 ---
 
 ## 📊 Dashboard — Looker Studio
 
-> 🚧 **Em construção**: será publicado após implantação em produção.
+> 🚧 **Em construção** — será publicado após implantação em produção.
 
 **Métricas planejadas:**
 - Faturamento total (mensal, semanal, diário)
@@ -184,7 +191,7 @@ O site foi construído em HTML, CSS e JS puro, hospedado no **GitHub Pages**, e 
 - Fluxo de caixa simplificado
 - Comparativo entre períodos
 
-*O dashboard desse repositório utiliza dados fakes para demonstração pública, preservando a confidencialidade do cliente.*
+*O dashboard utilizará dados fakes para demonstração pública, preservando a confidencialidade do cliente.*
 
 ---
 
@@ -243,5 +250,5 @@ O objetivo foi ir além de uma planilha comum — entregando um sistema integrad
 ---
 
 <div align="center">
-<sub>Desenvolvido por mim para a L&K Barbearia · 2026</sub>
+<sub>Desenvolvido com 💈 para a L&K Barbearia · 2025/2026</sub>
 </div>
