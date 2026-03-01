@@ -140,15 +140,54 @@ Essa fórmula sempre traz o **último preço de custo registrado** para cada pro
 
 Igual ao raciocínio dos preços: valor estático no lançamento garante que, mesmo que a categoria seja editada depois, o tipo contábil original é preservado.
 
-### Tratamento de decimais do Google Forms
+### Tratamento de decimais — locale BR vs. padrão internacional
 
-O Google Forms, ao validar campos numéricos, usa **ponto** como separador decimal (padrão internacional). O script normaliza isso antes de persistir na planilha:
+O Google Sheets no Brasil armazena valores com **vírgula** como separador decimal. O script normaliza isso antes de persistir qualquer cálculo, evitando que valores textuais (`"35,00"`) gerem zeros silenciosos:
 
 ```javascript
-var valorRaw = sheetForms.getRange(ultimaLinha, 4).getValue();
-var valor = parseFloat(valorRaw.toString().replace(",", "."));
-if (isNaN(valor)) valor = 0;
+function toNumber(valor) {
+  if (typeof valor === 'number') return valor;
+  if (!valor || valor === '') return 0;
+  var limpo = valor.toString()
+    .replace(/R\$\s*/g, '')
+    .replace(/\./g, '')      // remove separador de milhar
+    .replace(',', '.')       // converte decimal BR → JS
+    .trim();
+  var num = parseFloat(limpo);
+  return isNaN(num) ? 0 : num;
+}
 ```
+
+Essa função é aplicada em todos os valores numéricos retornados da CONFIG antes de qualquer cálculo.
+
+### Ranges da CONFIG projetados para crescimento
+
+Os ranges de busca na CONFIG foram definidos com folga intencional para suportar a adição de novos serviços e produtos sem necessidade de alterar o script:
+
+```javascript
+sheetConfig.getRange("F5:G30")   // serviços — suporta até 26 entradas
+sheetConfig.getRange("M5:N20")   // produtos  — suporta até 16 entradas
+```
+
+---
+
+## 💈 Catálogo de Serviços
+
+O sistema suporta atualmente **17 serviços**, incluindo serviços individuais, combos e tratamentos:
+
+| Código | Serviço | Preço |
+|--------|---------|-------|
+| SRV001 | Corte | R$ 35,00 |
+| SRV002 | Barba | R$ 30,00 |
+| SRV003 | Sobrancelha | R$ 10,00 |
+| SRV004 | Combo Corte + Barba + Sobrancelha | R$ 70,00 |
+| SRV005 | Combo Corte + Sobrancelha + Bigode | R$ 50,00 |
+| SRV006–SRV009 | Relaxamento (4 comprimentos) | R$ 35,00–R$ 50,00 |
+| SRV010–SRV013 | Progressiva (4 comprimentos) | R$ 50,00–R$ 80,00 |
+| SRV014 | Combo Corte + Barba | R$ 60,00 |
+| SRV015 | Combo Corte + Sobrancelha | R$ 40,00 |
+| SRV016 | Combo Corte + Bigode | R$ 40,00 |
+| SRV017 | Combo Barba + Sobrancelha | R$ 40,00 |
 
 ---
 
@@ -162,6 +201,7 @@ O site foi construído em HTML, CSS e JS puro, hospedado no **GitHub Pages**, e 
 - Botões que abrem uma **prévia visual** de cada formulário em modal
 - Aviso fixo de versão demonstrativa no canto inferior esquerdo
 - Botão para o Dashboard (Looker Studio)
+- **Manual de Uso interativo** — página dedicada com passo a passo para os barbeiros, FAQ accordion e exemplos práticos por situação
 - Layout responsivo para uso no celular
 
 > 📸 *Esta é a versão demonstrativa pública. Os botões exibem prints dos formulários reais com aviso de dados fictícios, preservando a confidencialidade do cliente. O sistema em produção opera com acesso direto aos formulários via link.*
@@ -175,25 +215,31 @@ assets/
     ├── form-vendas-produtos.png   ← prévia do formulário de vendas
     ├── form-custos.png            ← prévia do formulário de custos
     └── form-compras.png           ← prévia do formulário de compras
+
+manual.html                        ← manual de uso interativo (FAQ accordion,
+                                      passo a passo, exemplos por situação)
 ```
 
 ---
 
 ## 📊 Dashboard — Looker Studio
 
-> 🚧 **Em construção** — será publicado após implantação em produção.
+> 🚧 **Em desenvolvimento** — será publicado em breve.
 
-**Métricas planejadas:**
-- Faturamento total (mensal, semanal, diário)
-- Receita por barbeiro + comissões
-- Top serviços por volume e por receita
-- Vendas de produtos vs. meta
-- Margem bruta por produto
-- Custos operacionais (OPEX vs. CAPEX)
-- Fluxo de caixa simplificado
-- Comparativo entre períodos
+**Modelagem planejada:**
+- `fRegistros` — fato central com todos os atendimentos e vendas
+- `fCompras` — fato de entradas de estoque
+- `fCustos` — fato de despesas operacionais
+- `dServicos`, `dProdutos`, `dBarbeiros` — dimensões de apoio
 
-*O dashboard utilizará dados fakes para demonstração pública, preservando a confidencialidade do cliente.*
+**Páginas planejadas:**
+1. **Visão Geral** — faturamento bruto, ticket médio, MoM
+2. **Desempenho Barbeiros** — ranking, atendimentos, dias mais movimentados
+3. **Serviços e Produtos** — top serviços por volume e receita, mix de pagamentos
+4. **Custos e Margem** — OPEX vs. CAPEX, margem bruta estimada, evolução mensal
+5. **Estoque e Compras** — investimento em produtos, evolução por mês
+
+*O dashboard utilizará dados fictícios (11 meses — Jul/2025 a Mai/2026) para demonstração pública, preservando a confidencialidade do cliente.*
 
 ---
 
@@ -207,20 +253,6 @@ assets/
 | **Looker Studio** | Dashboard gerencial e visualizações |
 | **HTML / CSS / JS** | Site Command Center dos barbeiros |
 | **GitHub Pages** | Hospedagem gratuita do site |
-
----
-
-## 🔧 Como Replicar Este Projeto
-
-1. Crie uma planilha Google Sheets com as abas: `REGISTROS`, `COMPRAS`, `CUSTOS`, `CONFIG`
-2. Crie os Google Forms vinculados às abas `Forms_LK_*`
-3. No Apps Script da planilha, cole os scripts deste repositório
-4. Configure os triggers para `onFormSubmit`, `onFormSubmitCompras` e `onFormSubmitCustos`
-5. Ajuste a aba CONFIG com seus serviços, produtos e parâmetros
-6. Clone o site e publique via GitHub Pages
-7. Conecte o Looker Studio às abas `REGISTROS`, `COMPRAS` e `CUSTOS`
-
-> ⚠️ Este repositório contém dados fictícios para demonstração. O projeto em produção opera com dados reais e confidenciais do cliente.
 
 ---
 

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L&K Barbearia — Manual do Sistema</title>
+  <link rel="icon" href="./assets/Logo_LK.png" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/Logo_LK.png">
+  <meta name="description" content="Manual de uso do sistema de gestão da L&K Barbearia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       RESET & BASE (igual ao site principal)
+    ========================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:           hsl(0, 0%, 7%);
+      --fg:           hsl(40, 20%, 92%);
+      --gold:         hsl(43, 72%, 55%);
+      --gold-light:   hsl(43, 80%, 65%);
+      --gold-dark:    hsl(43, 65%, 40%);
+      --muted:        hsl(0, 0%, 55%);
+      --border:       hsl(0, 0%, 18%);
+      --glass-bg:     rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-hover:  rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bg-pattern {
+      position: fixed;
+      inset: 0;
+      opacity: 0.02;
+      background-image: radial-gradient(circle at 1px 1px, var(--fg) 1px, transparent 0);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ==========================================
+       HEADER / BACK BUTTON
+    ========================================== */
+    .top-bar {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover { color: var(--gold); }
+
+    .back-btn svg {
+      width: 1rem; height: 1rem;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .top-bar-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ==========================================
+       MAIN LAYOUT
+    ========================================== */
+    main {
+      flex: 1;
+      max-width: 52rem;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ==========================================
+       HERO DO MANUAL
+    ========================================== */
+    .manual-hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeIn 0.8s ease-out both;
+    }
+
+    .manual-hero img {
+      width: 5rem;
+      height: 5rem;
+      object-fit: contain;
+      margin-bottom: 1.25rem;
+      filter: drop-shadow(0 20px 20px rgba(0,0,0,0.5));
+    }
+
+    .manual-hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .manual-hero p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================
+       ÍNDICE / NAVEGAÇÃO
+    ========================================== */
+    .indice {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s ease-out 0.2s both;
+    }
+
+    .indice-titulo {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .indice-lista {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .indice-lista a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      transition: color 0.3s ease;
+      padding: 0.25rem 0;
+    }
+
+    .indice-lista a:hover { color: var(--gold); }
+
+    .indice-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      color: var(--gold-dark);
+      min-width: 1.5rem;
+    }
+
+    /* ==========================================
+       SEÇÕES DO MANUAL
+    ========================================== */
+    .secao {
+      margin-bottom: 3rem;
+      animation: fadeUp 0.6s ease-out both;
+    }
+
+    .secao-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .secao-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      background: hsla(43, 72%, 55%, 0.1);
+      border: 1px solid hsla(43, 72%, 55%, 0.2);
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.625rem;
+      white-space: nowrap;
+    }
+
+    .secao h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: 0.04em;
+    }
+
+    .secao p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: hsl(40, 15%, 80%);
+      margin-bottom: 1rem;
+    }
+
+    .secao h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    /* ==========================================
+       GLASS CARD (igual ao principal)
+    ========================================== */
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 0.75rem;
+    }
+
+    /* ==========================================
+       PASSO A PASSO
+    ========================================== */
+    .passos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      margin: 1rem 0;
+    }
+
+    .passo {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.875rem 1rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 0.625rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .passo:hover { border-color: hsla(43, 72%, 55%, 0.25); }
+
+    .passo-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 1.75rem;
+      padding-top: 0.05rem;
+    }
+
+    .passo-texto {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: hsl(40, 15%, 80%);
+    }
+
+    .passo-texto strong { color: var(--fg); font-weight: 600; }
+
+    /* ==========================================
+       ALERTAS
+    ========================================== */
+    .alerta {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1rem 1.125rem;
+      border-radius: 0.625rem;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .alerta-icon { font-size: 1rem; margin-top: 0.05rem; flex-shrink: 0; }
+
+    .alerta.dica {
+      background: hsla(120, 40%, 20%, 0.3);
+      border: 1px solid hsla(120, 40%, 40%, 0.3);
+      color: hsl(120, 30%, 80%);
+    }
+
+    .alerta.cuidado {
+      background: hsla(43, 72%, 20%, 0.3);
+      border: 1px solid hsla(43, 72%, 40%, 0.3);
+      color: hsl(43, 60%, 80%);
+    }
+
+    .alerta.erro {
+      background: hsla(0, 60%, 20%, 0.3);
+      border: 1px solid hsla(0, 60%, 40%, 0.3);
+      color: hsl(0, 50%, 80%);
+    }
+
+    /* ==========================================
+       TABELA DE CAMPOS
+    ========================================== */
+    .tabela-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border-radius: 0.625rem;
+      border: 1px solid var(--glass-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead tr {
+      background: hsla(43, 72%, 55%, 0.12);
+      border-bottom: 1px solid hsla(43, 72%, 55%, 0.2);
+    }
+
+    thead th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--glass-hover); }
+
+    tbody td {
+      padding: 0.75rem 1rem;
+      color: hsl(40, 15%, 80%);
+      line-height: 1.6;
+      vertical-align: top;
+    }
+
+    tbody td:first-child { color: var(--fg); font-weight: 500; }
+
+    .tag-obrig {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: hsl(0, 60%, 70%);
+      background: hsla(0, 60%, 40%, 0.2);
+      border: 1px solid hsla(0, 60%, 40%, 0.3);
+      border-radius: 0.25rem;
+      padding: 0.1rem 0.375rem;
+      margin-left: 0.375rem;
+      vertical-align: middle;
+    }
+
+    .tag-auto {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: hsl(120, 40%, 70%);
+      background: hsla(120, 40%, 40%, 0.2);
+      border: 1px solid hsla(120, 40%, 40%, 0.3);
+      border-radius: 0.25rem;
+      padding: 0.1rem 0.375rem;
+      margin-left: 0.375rem;
+      vertical-align: middle;
+    }
+
+    /* ==========================================
+       EXEMPLOS PRÁTICOS
+    ========================================== */
+    .exemplos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      margin: 1rem 0;
+    }
+
+    .exemplo {
+      padding: 1.125rem 1.25rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-left: 3px solid var(--gold-dark);
+      border-radius: 0.625rem;
+    }
+
+    .exemplo-titulo {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .exemplo-linha {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: hsl(40, 15%, 75%);
+      padding: 0.2rem 0;
+    }
+
+    .exemplo-campo { color: var(--muted); min-width: 7rem; flex-shrink: 0; }
+    .exemplo-valor { color: var(--fg); font-weight: 500; }
+
+    /* ==========================================
+       FAQ
+    ========================================== */
+    .faq-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .faq-item {
+      border: 1px solid var(--glass-border);
+      border-radius: 0.625rem;
+      overflow: hidden;
+    }
+
+    .faq-pergunta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.125rem;
+      background: var(--glass-bg);
+      color: var(--fg);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    .faq-pergunta:hover { background: var(--glass-hover); }
+
+    .faq-chevron {
+      width: 1rem; height: 1rem;
+      stroke: var(--gold); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.aberto .faq-chevron { transform: rotate(180deg); }
+    .faq-item.aberto .faq-pergunta { color: var(--gold-light); }
+
+    .faq-resposta {
+      display: none;
+      padding: 0 1.125rem 1rem;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: hsl(40, 15%, 75%);
+      border-top: 1px solid var(--border);
+      background: var(--glass-bg);
+    }
+
+    .faq-resposta p { padding-top: 0.875rem; }
+    .faq-item.aberto .faq-resposta { display: block; }
+
+    /* ==========================================
+       FOOTER
+    ========================================== */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 1.5rem;
+      text-align: center;
+      border-top: 1px solid hsla(0, 0%, 18%, 0.5);
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ==========================================
+       ANIMATIONS
+    ========================================== */
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ==========================================
+       RESPONSIVE
+    ========================================== */
+    @media (min-width: 640px) {
+      .manual-hero h1  { font-size: 1.875rem; }
+      .secao h2        { font-size: 1.25rem; }
+      .exemplo-campo   { min-width: 9rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-pattern"></div>
+
+  <!-- Demo Badge -->
+  <div style="
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    z-index: 100;
+    background: rgba(20,20,20,0.85);
+    border: 1px solid hsla(43,72%,55%,0.35);
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: hsl(43,72%,55%);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+  ">Versão Demonstrativa</div>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="top-bar">
+    <a href="./index.html" class="back-btn">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar ao Painel
+    </a>
+    <span class="top-bar-title">Manual do Sistema</span>
+  </div>
+
+  <main>
+
+    <!-- HERO -->
+    <div class="manual-hero">
+      <img src="./assets/Logo_LK.png" alt="L&K Barbearia">
+      <h1>Manual do Sistema</h1>
+      <p>Guia prático de uso diário</p>
+    </div>
+
+    <!-- ÍNDICE -->
+    <nav class="indice glass-card">
+      <p class="indice-titulo">Neste manual</p>
+      <ul class="indice-lista">
+        <li><a href="#como-funciona"><span class="indice-num">01</span> Como funciona o sistema</a></li>
+        <li><a href="#atendimento"><span class="indice-num">02</span> Formulário de Atendimento</a></li>
+        <li><a href="#produtos"><span class="indice-num">03</span> Formulário de Venda de Produto</a></li>
+        <li><a href="#faq"><span class="indice-num">04</span> Dúvidas Frequentes</a></li>
+      </ul>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+         SEÇÃO 1 — COMO FUNCIONA
+    ══════════════════════════════════════════ -->
+    <section class="secao" id="como-funciona" style="animation-delay: 100ms;">
+      <div class="secao-header">
+        <span class="secao-num">01</span>
+        <h2>Como funciona o sistema?</h2>
+      </div>
+
+      <p>O sistema da L&K Barbearia é simples: cada vez que você atende um cliente ou vende um produto, você preenche um formulário rápido pelo celular. Com isso, o dono consegue ver em tempo real quanto a barbearia faturou, quanto cada barbeiro atendeu e quais serviços estão saindo mais.</p>
+      <p>Não é necessário nenhum aplicativo. Tudo funciona pelo navegador do celular — Chrome, Safari, qualquer um.</p>
+
+      <h3>O que você vai usar todo dia</h3>
+
+      <div class="exemplos">
+        <div class="exemplo">
+          <div class="exemplo-titulo">📱 QR Code de Atendimento</div>
+          <div class="exemplo-linha">
+            <span class="exemplo-campo">Quando usar:</span>
+            <span class="exemplo-valor">Após cada serviço realizado (corte, barba, progressiva...)</span>
+          </div>
+          <div class="exemplo-linha">
+            <span class="exemplo-campo">Onde fica:</span>
+            <span class="exemplo-valor">Fixo na sua bancada</span>
+          </div>
+        </div>
+        <div class="exemplo">
+          <div class="exemplo-titulo">🛍️ QR Code de Venda de Produto</div>
+          <div class="exemplo-linha">
+            <span class="exemplo-campo">Quando usar:</span>
+            <span class="exemplo-valor">Quando um cliente comprar qualquer produto</span>
+          </div>
+          <div class="exemplo-linha">
+            <span class="exemplo-campo">Onde fica:</span>
+            <span class="exemplo-valor">Fixo na sua bancada</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alerta cuidado">
+        <span class="alerta-icon">⚠️</span>
+        <span>Esses dois QR Codes são seus — não use o QR Code de outra bancada. Cada barbeiro tem o seu próprio.</span>
+      </div>
+
+      <h3>Por que é importante registrar tudo?</h3>
+      <p>Quando você não registra um atendimento, esse dinheiro não aparece no sistema. Isso afeta o controle financeiro da barbearia. O sistema só funciona bem se todo mundo usar direitinho.</p>
+
+      <div class="alerta erro">
+        <span class="alerta-icon">❌</span>
+        <span>O registro não é opcional. Todo atendimento, sem exceção, precisa ser lançado no formulário.</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SEÇÃO 2 — ATENDIMENTO
+    ══════════════════════════════════════════ -->
+    <section class="secao" id="atendimento" style="animation-delay: 150ms;">
+      <div class="secao-header">
+        <span class="secao-num">02</span>
+        <h2>Formulário de Atendimento</h2>
+      </div>
+
+      <p>Use este formulário toda vez que terminar um serviço — corte, barba, sobrancelha, progressiva, relaxamento ou qualquer combinação.</p>
+
+      <h3>Passo a passo</h3>
+      <div class="passos">
+        <div class="passo">
+          <span class="passo-num">1.</span>
+          <span class="passo-texto">Pegue o celular e aponte a câmera para o <strong>QR Code de Atendimento</strong> da sua bancada.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">2.</span>
+          <span class="passo-texto">O formulário vai abrir automaticamente no navegador.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">3.</span>
+          <span class="passo-texto">Preencha os campos conforme explicado abaixo.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">4.</span>
+          <span class="passo-texto">Toque em <strong>Enviar</strong>.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">5.</span>
+          <span class="passo-texto">Pronto! O sistema registrou o atendimento automaticamente.</span>
+        </div>
+      </div>
+
+      <h3>O que preencher em cada campo</h3>
+      <div class="tabela-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Campo</th>
+              <th>O que colocar</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Barbeiro <span class="tag-auto">automático</span></td>
+              <td>Seu nome — já vem pré-selecionado</td>
+              <td>Se aparecer errado, não envie. Avise o responsável.</td>
+            </tr>
+            <tr>
+              <td>Serviço realizado <span class="tag-obrig">obrigatório</span></td>
+              <td>O serviço que você realizou</td>
+              <td>Escolha na lista. Se não encontrar, use Observação.</td>
+            </tr>
+            <tr>
+              <td>Forma de Pagamento <span class="tag-obrig">obrigatório</span></td>
+              <td>Como o cliente pagou</td>
+              <td>Pix, Débito, Crédito ou Dinheiro</td>
+            </tr>
+            <tr>
+              <td>Observação</td>
+              <td>Qualquer detalhe relevante</td>
+              <td>Campo opcional. Use para situações fora do padrão.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alerta dica">
+        <span class="alerta-icon">✅</span>
+        <span>Não existe campo para digitar o valor. O sistema já conhece o preço de cada serviço automaticamente.</span>
+      </div>
+
+      <h3>Exemplos práticos</h3>
+      <div class="exemplos">
+        <div class="exemplo">
+          <div class="exemplo-titulo">Situação 1 — Cliente fez só o corte e pagou no Pix</div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Serviço:</span><span class="exemplo-valor">Corte</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Pagamento:</span><span class="exemplo-valor">Pix</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Observação:</span><span class="exemplo-valor">— (deixar em branco)</span></div>
+        </div>
+        <div class="exemplo">
+          <div class="exemplo-titulo">Situação 2 — Cliente fez corte + barba e pagou no crédito</div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Serviço:</span><span class="exemplo-valor">Combo Corte + Barba + Sobrancelha</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Pagamento:</span><span class="exemplo-valor">Crédito</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Observação:</span><span class="exemplo-valor">— (deixar em branco)</span></div>
+        </div>
+        <div class="exemplo">
+          <div class="exemplo-titulo">Situação 3 — Cliente pagou metade em dinheiro, metade no Pix</div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Serviço:</span><span class="exemplo-valor">Corte</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Pagamento:</span><span class="exemplo-valor">Pix (forma principal)</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Observação:</span><span class="exemplo-valor">Metade dinheiro, metade Pix</span></div>
+        </div>
+      </div>
+
+      <div class="alerta cuidado">
+        <span class="alerta-icon">⚠️</span>
+        <span>Pagamento misto? Escolha a forma principal e anote o detalhe no campo Observação.</span>
+      </div>
+      <div class="alerta erro">
+        <span class="alerta-icon">❌</span>
+        <span>Nunca feche o formulário antes de clicar em Enviar. Se fechar antes, o atendimento não é registrado.</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SEÇÃO 3 — VENDA DE PRODUTO
+    ══════════════════════════════════════════ -->
+    <section class="secao" id="produtos" style="animation-delay: 200ms;">
+      <div class="secao-header">
+        <span class="secao-num">03</span>
+        <h2>Formulário de Venda de Produto</h2>
+      </div>
+
+      <p>Use este formulário quando um cliente comprar qualquer produto — gel, pomada, óleo de barba, perfume ou qualquer item à venda na barbearia.</p>
+
+      <div class="alerta cuidado">
+        <span class="alerta-icon">⚠️</span>
+        <span>Este formulário é diferente do de atendimento. Use o QR Code correto — o de produto, não o de serviço.</span>
+      </div>
+
+      <h3>Passo a passo</h3>
+      <div class="passos">
+        <div class="passo">
+          <span class="passo-num">1.</span>
+          <span class="passo-texto">Aponte a câmera para o <strong>QR Code de Venda de Produto</strong> da sua bancada.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">2.</span>
+          <span class="passo-texto">O formulário vai abrir no navegador.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">3.</span>
+          <span class="passo-texto">Escolha o produto, a quantidade e a forma de pagamento.</span>
+        </div>
+        <div class="passo">
+          <span class="passo-num">4.</span>
+          <span class="passo-texto">Toque em <strong>Enviar</strong>.</span>
+        </div>
+      </div>
+
+      <h3>O que preencher em cada campo</h3>
+      <div class="tabela-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Campo</th>
+              <th>O que colocar</th>
+              <th>Exemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Produto <span class="tag-obrig">obrigatório</span></td>
+              <td>Nome do produto vendido</td>
+              <td>Pomada Básica</td>
+            </tr>
+            <tr>
+              <td>Quantidade <span class="tag-obrig">obrigatório</span></td>
+              <td>Quantas unidades o cliente levou</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Forma de Pagamento <span class="tag-obrig">obrigatório</span></td>
+              <td>Como o cliente pagou</td>
+              <td>Pix</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Exemplos práticos</h3>
+      <div class="exemplos">
+        <div class="exemplo">
+          <div class="exemplo-titulo">Situação 1 — Cliente comprou 1 gel e pagou em dinheiro</div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Produto:</span><span class="exemplo-valor">Gel Fixador</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Quantidade:</span><span class="exemplo-valor">1</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Pagamento:</span><span class="exemplo-valor">Dinheiro</span></div>
+        </div>
+        <div class="exemplo">
+          <div class="exemplo-titulo">Situação 2 — Cliente comprou 2 pomadas e pagou no crédito</div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Produto:</span><span class="exemplo-valor">Pomada Básica</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Quantidade:</span><span class="exemplo-valor">2</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Pagamento:</span><span class="exemplo-valor">Crédito</span></div>
+        </div>
+        <div class="exemplo">
+          <div class="exemplo-titulo">Situação 3 — Cliente comprou pomada E óleo no mesmo dia</div>
+          <div class="exemplo-linha"><span class="exemplo-campo">Ação:</span><span class="exemplo-valor">Envie um formulário para cada produto separadamente</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">1º envio:</span><span class="exemplo-valor">Pomada Básica — Qtde 1</span></div>
+          <div class="exemplo-linha"><span class="exemplo-campo">2º envio:</span><span class="exemplo-valor">Óleo de Barba — Qtde 1</span></div>
+        </div>
+      </div>
+
+      <div class="alerta cuidado">
+        <span class="alerta-icon">⚠️</span>
+        <span>Cliente levou 2 unidades do mesmo produto? Coloque 2 no campo quantidade. Não envie o formulário duas vezes.</span>
+      </div>
+      <div class="alerta dica">
+        <span class="alerta-icon">✅</span>
+        <span>Produtos diferentes = formulários separados. Um formulário para cada tipo de produto.</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SEÇÃO 4 — FAQ
+    ══════════════════════════════════════════ -->
+    <section class="secao" id="faq" style="animation-delay: 250ms;">
+      <div class="secao-header">
+        <span class="secao-num">04</span>
+        <h2>Dúvidas Frequentes</h2>
+      </div>
+
+      <div class="faq-lista">
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Esqueci de registrar um atendimento. O que faço?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Avise o responsável pelo sistema o quanto antes. Ele consegue fazer o lançamento manualmente. Não tente alterar nada na planilha por conta própria.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            O formulário não abriu com o QR Code. O que fazer?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Tente abrir o link do formulário diretamente pelo navegador. Se não funcionar, avise o responsável imediatamente. Não deixe o atendimento sem registro.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Marquei a forma de pagamento errada. E agora?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Avise o responsável o quanto antes. Quanto mais cedo você avisar, mais fácil é identificar e corrigir o registro. Nunca envie o formulário de novo para "corrigir" — isso cria duplicata.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Preciso ter conta no Google para usar?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Não. Os formulários funcionam em qualquer navegador, sem precisar fazer login em nenhuma conta Google.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            O cliente pagou uma parte hoje e outra depois. Como registro?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Registre pelo valor total do serviço escolhendo a forma principal de pagamento. Use o campo Observação para explicar a situação. Exemplo: "R$20 hoje, R$15 na próxima visita".</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Posso usar pelo computador?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Sim. O link funciona em qualquer dispositivo com internet. Mas o mais prático é pelo celular usando o QR Code da sua bancada.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            O QR Code está danificado ou sumiu. O que fazer?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Avise o responsável. Não tente criar ou imprimir um novo por conta própria — cada QR Code está vinculado à sua bancada e precisa ser reemitido pelo sistema.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Enviei o formulário mas o atendimento não apareceu. O que houve?
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-resposta">
+            <p>Verifique se você realmente clicou em Enviar e viu a mensagem de confirmação do Google. Se não viu, o formulário não foi enviado. Tente novamente ou avise o responsável.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RODAPÉ DO CONTEÚDO -->
+    <div style="text-align:center; padding: 2rem 0 0; border-top: 1px solid var(--border);">
+      <p style="color: var(--muted); font-size: 0.8rem; margin-bottom: 0.5rem;">Dúvidas ou problemas?</p>
+      <p style="color: var(--fg); font-size: 0.875rem; font-weight: 500;">Fale com o responsável pelo sistema.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>L&K Barber Store © <span id="year"></span> | Desenvolvido por
+      <a href="https://www.linkedin.com/in/santosgustavohenrique" target="_blank" rel="noopener noreferrer"
+        style="color: var(--gold); text-decoration: none; font-weight: 500; transition: 0.3s ease;"
+        onmouseover="this.style.color='#f1c40f'" onmouseout="this.style.color='var(--gold)'">
+        Gustavo Santos
+      </a>
+    </p>
+  </footer>
+
+  <script>
+    // Ano automático
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-pergunta').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const item = this.closest('.faq-item');
+        const estaAberto = item.classList.contains('aberto');
+
+        // Fecha todos
+        document.querySelectorAll('.faq-item.aberto').forEach(function(aberto) {
+          aberto.classList.remove('aberto');
+        });
+
+        // Abre o clicado (se estava fechado)
+        if (!estaAberto) item.classList.add('aberto');
+      });
+    });
+
+    // Scroll suave para os links do índice
+    document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const alvo = document.querySelector(this.getAttribute('href'));
+        if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+</body>
+</html>
